@@ -33,7 +33,7 @@ Hopefully as fluxer grows the developers will losen some import restrictions to 
 a customizable theme based on Neon Prime. Includes options for horizontal server list, hiding blocked user messages, outline online status & more
 
 ### Presets
-- PRIME: 					https://web.fluxer.app/theme/67cb057e0bc273d7
+- PRIME: 					https://web.fluxer.app/theme/3a76dddb9b4fb46c
 
 
 ## PRIME Screenshots

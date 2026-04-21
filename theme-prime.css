@@ -1,5 +1,3 @@
-
-
 @import url('https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@300&display=swap');
 
@@ -1016,27 +1014,31 @@ div:has(>[class*="ChannelItem.module__channelItemIcon_"]) {
 
 /* user typing status user container thingy */
 [class*='ChannelChatLayout.module__typingContent_'] {
-	bottom: calc(var(--typing-floating-offset) + 16px);
+	bottom: calc(var(--typing-floating-offset) + -3px);
 }
 
 /* overwrite the spacing change while replying to someone */
 [class*='ChannelChatLayout.module__typingAreaWithTopBar_'] [class*='ChannelChatLayout.module__typingContent_'] {
-	bottom: calc(var(--typing-floating-offset) + 16px);
+	bottom: calc(var(--typing-floating-offset) + -3px);
 }
 
 /* user typing status user pills */
-[class*='Message.module__typingPill_'] {
-	border-radius: var(--radius-md);
+[class*='Message.module__typingPill_'],
+[class*='SlowmodeIndicator.module__container_'] {
 	background: var(--themecolor-black-50);
+	border-radius: var(--radius-full);
+	transform: none;
 	
 	transition: var(--transition-normal);
 }
-[class*='Message.module__typingPill_']:hover {
+[class*='Message.module__typingPill_']:hover,
+[class*='SlowmodeIndicator.module__container_']:hover {
+	background: var(--themecolor-black-25);
 	border-color: var(--themecolor-tech);
 	
 	transition: var(--transition-fast);
-	transition-property: border-color;
 }
+
 
 
 /* text area */
@@ -1266,7 +1268,9 @@ div:has(>[class*="ChannelItem.module__channelItemIcon_"]) {
 [class*="QuickSwitcherModal.module__inputBackground_"],
 [class*="DiscoveryPage.module__searchInput_"],
 /* message hover action bar */
-[class*="MessageActionBar.module__actionBar_"] {
+[class*="MessageActionBar.module__actionBar_"],
+/* edit message area */
+[class*="TextareaInput.module__mainWrapperEditing_"] {
 	background: var(--themecolor-black-50);
 	transition: var(--transition-normal);
 	transition-property: border-color;
@@ -1274,16 +1278,15 @@ div:has(>[class*="ChannelItem.module__channelItemIcon_"]) {
 .FormSurface\.module__surface___XzQ4ZT:hover,
 [class*="QuickSwitcherModal.module__inputBackground_"]:hover,
 [class*="DiscoveryPage.module__searchInput_"]:hover,
-[class*="MessageActionBar.module__actionBar_"]:hover {
+[class*="MessageActionBar.module__actionBar_"]:hover,
+/* edit message area */
+[class*="TextareaInput.module__mainWrapperEditing_"]:hover {
+	background: var(--themecolor-black-25);
 	border-color: var(--themecolor-tech);
 	transition: var(--transition-fast);
 	transition-property: border-color;
 }
 
-/* edit message area */
-[class*="TextareaInput.module__mainWrapperEditing_"] {
-	background: var(--themecolor-black-50);
-}
 [class*="TextareaInput.module__textareaContainer_"] {
 	background: unset;
 }
@@ -1655,12 +1658,10 @@ pre {
 		background-repeat: no-repeat;
 		background-position: center;
 		
-		/* very hacky workaround to tint the logo */
-
 		transition: var(--transition-normal);
 	}
 	
-	[class*="GuildsLayout.module__fluxerSymbolIcon_"]:hover {
+	[class*="GuildsLayout.module__guildListItem_"]:hover [class*="GuildsLayout.module__fluxerSymbolIcon_"] {
 		background-image: var(--icon-prime-offblack);
 		transform: rotate(180deg);
 		transition-timing-function: ease-out;
@@ -1706,7 +1707,6 @@ pre {
 		background-repeat: no-repeat;
 		background-position: center;
 		background-size: cover;
-		/* very hacky workaround to tint the logo */
 		animation: logo-rotate infinite 60s linear;
 	}
 
