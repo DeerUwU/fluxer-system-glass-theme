@@ -6,9 +6,9 @@ simply click one of the theme preset links. fluxer should automatically open and
 a highly customizable frosted glass theme for fluxer, based on refact0r's tui style discord theme [system24](https://github.com/refact0r/system24/). this is NOT a port. 
 
 ### Presets
-- System-Glass (default): 	https://web.fluxer.app/theme/1a427a8ec15b2fd8
-- system24: 				https://web.fluxer.app/theme/cfae62cde032c4f4
-- midnight-glass: 			https://web.fluxer.app/theme/e1aa912cfa59fdbf
+- System-Glass (default): 	https://web.canary.fluxer.app/theme/633e82847885ba9d
+- system24: 				https://web.canary.fluxer.app/theme/b4f4c2a33e1febc6
+- midnight-glass: 			https://web.canary.fluxer.app/theme/46bfed29bc597988
 
 ## Customization
 All customization options are located inside the first body {} and :root {} tags. every option is clearly labeled and comes with descriptions. 

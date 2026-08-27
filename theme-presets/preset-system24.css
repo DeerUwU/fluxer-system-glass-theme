@@ -1,3 +1,11 @@
+/**
+ * @name Preset system24
+ * @description based on system24 by refact0r.  this should be applied AFTER System Glass Base
+ * @author deer#1234
+ * @version 2.0
+ * @tags minimal, retro, customizable
+ */
+
 @import url('https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
 /* ----------------------------------------------------------------------- */
 /* System-Glass (system24) Theme by Deer ♡ - based on System24 by refact0r
@@ -24,14 +32,11 @@ body {
 	--UseDefaultRounding: off; 
 	/* decide if you want to disable some additional animations added by the theme | Options: off, on */
 	--ExtraAnimations: on;
-	/* set a custom app icon in the top left corner | Options: off, on */
-	--CustomAppIcon: off;
-	/* link to your custom icon. currently it HAS to be hosted on fluxer's servers */
-	--ThemeCustomIconUrl: url('');
-	/* [Experimental] Controls the server list position. Options: off | on */
+	/* Controls the server list position. Options: off | on */
 	--Horizontal-Serverlist: off;
-	/* Controls the server list alignment. only works with horizontal serverlist enabled. Options: left | center | right */
-	--Serverlist-Alignment: left;
+	/* Controls the server list alignment. center only works with the horizontal serverlist. 
+    Options: left | center | right */
+    --Serverlist-Alignment: left;
 }
 
 :root {
@@ -180,6 +185,9 @@ body {
 	--ThemeDarkenMedium: #00000088;
 	--ThemeBrightenLight: rgba(255, 255, 255, .06);
 	--ThemeBrightenMedium: rgba(255, 255, 255, .15);
+
+    --text-chat: #222;
+    --text-chat-muted: #444;
 	
 	
 	/* fallback color behind the background image. can be used to give your bg image a tint */

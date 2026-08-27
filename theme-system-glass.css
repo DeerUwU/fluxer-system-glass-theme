@@ -1,7 +1,12 @@
+/**
+ * @name System Glass base
+ * @description based on system24 by refact0r, using background art by ThaSilentArtist
+ * @author deer#1234
+ * @version 2.0
+ * @tags frosted glass, modern, customizable
+ */
+
 @import url('https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
-/* ----------------------------------------------------------------------- */
-/* System-Glass Theme by Deer ♡ - based on System24 by refact0r
-/* ----------------------------------------------------------------------- */
 
 body {
 	container-name: body;
@@ -18,19 +23,16 @@ body {
 	/* see also: --ThemeMessageBubbleColor */
 	--MessageBubbles: off;
 	/* decide if you want panel labels. looks better without a background image | Options: off, on */
-	--ThemePanelLabels: off;
+	--ThemePanelLabels: on;
 	/* overwrites fluxer's panel rounding in most places | Options: off, on
 	/* see also: --ThemeRoundingMultiplier */
 	--UseDefaultRounding: off; 
 	/* decide if you want to disable some additional animations added by the theme | Options: off, on */
 	--ExtraAnimations: on;
-	/* set a custom app icon in the top left corner | Options: off, on */
-	--CustomAppIcon: off;
-	/* link to your custom icon. currently it HAS to be hosted on fluxer's servers */
-	--ThemeCustomIconUrl: url('');
 	/* [Experimental] Controls the server list position. Options: off | on */
 	--Horizontal-Serverlist: off;
-	/* Controls the server list alignment. only works with horizontal serverlist enabled. Options: left | center | right */
+	/* Controls the server list alignment. center only works with the horizontal serverlist. 
+    Options: left | center | right */
 	--Serverlist-Alignment: left;
 }
 
@@ -177,6 +179,9 @@ body {
 	--ThemeFlatPrimary: #c8c8d1;
 	--ThemeFlatLighter: #cccfd6;
 	--ThemeFlatDarker: #c4c4cb;
+
+    --text-chat: #222;
+    --text-chat-muted: #444;
 	
 	/* ----------------------------------------------------------------------- */
 	/* Panels
@@ -259,16 +264,10 @@ html:not(.auth-page) [class*="App.module__appContainer_"],
 [class*="ChannelLayout.module__channelLayoutContainer_"],
 [class*="ChannelIndexPage.module__channelGrid_"],
 [class*="ChannelHeader.module__headerContainer_"],
-[class*="ChannelChatLayout.module__container_"],
-[class*="InputWrapper.module__box_"],
+[data-flx="channel.channel-chat-layout.container"],
+[data-flx="channel.lexical-channel-textarea-content.textarea-outer"],
 [class*="GuildHeader.module__headerContainer_"],
-[class*="DMLayout.module__dmLayoutContainer_"],
-[class*="DMList.module__dmListContainer_"],
-[class*="DMList.module__dmListHeader_"],
-[class*="DMList.module__desktopScroller_"],
-[class*="DMList.module__dmChannelList_"],
-[class*="DMLayout.module__contentColumn_"],
-[class*="DMLayout.module__contentInner_"],
+
 [class*="DMFriendsView.module__container_"],
 [class*="UserProfileModal.module__modalContainer_"],
 [class*="Divider.module__text_"],
@@ -281,15 +280,29 @@ html:not(.auth-page) [class*="App.module__appContainer_"],
 [class*="NotificationsPage.module__container_"],
 [class*="SelectBottomSheet.module__trigger_"],
 [class*="NotificationsPage.module__bookmarkButton_"],
-[class*="YouPage.module__profile_"],
-[class*="YouPage.module__noteIconWrapper_"],
-[class*="DMList.module__mobileContainer_"],
-[class*="DMList.module__mobileScroller_"],
-[class*="DMList.module__mobileHeaderButton_"],
-[class*="DMList.module__mobileAddFriendButton_"],
 [class*="MemberListContainer.module__memberListScroller_"],
 [class*="ChannelSearchResults.module__container_"],
-[class*="GuildNavbarSkeleton.module__skeletonHeader_"]
+[class*="GuildNavbarSkeleton.module__skeletonHeader_"],
+/* dm list & chat */
+[data-flx="channel.direct-message.dm-layout.content-inner--2"],
+[data-flx="channel.direct-message.dm-list.dm-list-header.show.button"],
+[data-flx="channel.direct-message.dm-list.desktop-scroller"],
+[data-flx="channel.direct-message.dm-list.dm-channel-list"], /* dm users */
+[data-flx="channel.direct-message.dm-layout.content-column--2"],
+[data-flx="channel.direct-message.dm-list.dm-list-container"],
+[data-flx="channel.direct-message.dm-layout.dm-layout-container"],
+[data-flx="channel.direct-message.dm-layout.dm-list-column--2"],
+/* vc */
+[data-flx="voice.compact-voice-call-view.compact-voice-call-view-inner.section.voice-root-pointer-activity"],
+[data-flx="channel.channel-view.channel-compact-call-surface.compact-call-wrapper"],
+[data-flx="voice.compact-voice-call-view.compact-voice-call-view-inner.content-area"],
+[data-flx="voice.compact-voice-call-view.avatar-fallback-node.audio-avatar-layout"],
+[data-flx="channel.channel-view.guild-channel-view.voice-channel-join-empty-state.voice-join-empty-state"],
+[data-flx="voice.compact-voice-call-view.compact-voice-call-placeholder-view.content-area"],
+[data-flx="voice.compact-voice-call-view.compact-voice-call-placeholder-view.audio-avatar-layout"],
+[data-flx="voice.compact-voice-call-view.compact-voice-call-placeholder-view.container"],
+[data-flx="channel.channel-view.dm-channel-view.compact-call-wrapper"]
+
 {
 	background: transparent;
 }
@@ -305,15 +318,18 @@ html:not(.auth-page) [class*="App.module__appContainer_"],
 /* server channel list skeleton */
 [class*="GuildNavbarSkeleton.module__skeletonContainer_"],
 /* dm list container */
-[class*="DMLayout.module__dmListColumn_"]
+[data-flx="channel.direct-message.dm-layout.dm-list-column--2"]
 {
 	width: -webkit-fill-available;
-	height: calc(100% - var(--layout-user-area-reserved-height) - var(--layout-mobile-bottom-nav-reserved-height) - var(--ThemePanelMargin) - var(--ThemePanelBorderThickness) * 2);
+	height: 100%;
+    /*height: calc(100% - var(--layout-user-area-reserved-height) - var(--layout-mobile-bottom-nav-reserved-height) - var(--ThemePanelMargin) - var(--ThemePanelBorderThickness) * 2);*/
+  height: calc(100% - var(--footer-box-height) - var(--ThemePanelMargin) - var(--ThemePanelBorderThickness) * 2);
 }
 /* self status */
-[class*="GuildsLayout.module__userAreaWrapper_"]
+[data-flx="app.guilds-layout.user-area-wrapper"]
 {
 	width: calc(var(--layout-guild-list-width) + var(--layout-sidebar-width) + var(--ThemePanelMargin));
+    padding: 0px;
 }
 
 /* channel header to message list */
@@ -353,18 +369,16 @@ html:not(.auth-page) [class*="App.module__appContainer_"],
 /* whole ui content container */
 [class*="GuildsLayout.module__contentContainer_"],
 /* dm area container */
-[class*="DMLayout.module__dmLayoutContainer_"],
+[data-flx="channel.direct-message.dm-layout.dm-layout-container"],
 /* nagbar to channel header */
 [class*="OutlineFrame.module__frame_"][class*="OutlineFrame.module__frameShowTop_"],
 [class*="GuildLayout.module__guildLayoutContainerWithNagbar_"],
 /* channel header to message list */
 [class*="ChannelIndexPage.module__channelGrid_"],
-/* messages to text input */
-[class*="ChannelChatLayout.module__container_"],
 /* server area container */
 [class*="GuildLayout.module__guildLayoutContent_"],
 /* friendslist to active panel */
-[class*="DMFriendsView.module__container_"],
+[data-flx="channel.direct-message.dm-friends-view.container"],
 /* friendslist header & friendslist */
 [class*="DMFriendsView.module__mainColumn_"],
 /* mobile notifications page header to notifs */
@@ -373,9 +387,9 @@ html:not(.auth-page) [class*="App.module__appContainer_"],
 	gap: var(--ThemePanelMargin);
 }
 
-/*  messages to text input | correcting for the typing members section */
-[class*="ChannelChatLayout.module__container_"] {
-	gap: calc(var(--ThemePanelMargin) / 2);
+/*  messages to text input */
+[data-flx="channel.channel-chat-layout.container"] {
+	gap: calc(var(--ThemePanelMargin) + 1px);
 }
 
 
@@ -428,13 +442,13 @@ html:not(.auth-page) [class*="App.module__appContainer_"],
 /* loading splashscreen */
 [class*='SplashScreen.module__splashContent_'],
 /* server sidebar */
-[class*="GuildsLayout.module__guildListScroller"],
+[data-flx="app.guilds-layout.guild-list.guild-list-scroller-wrapper"],
 /* dm list */
-[class*="DMLayout.module__dmListColumn_"],
+[data-flx="channel.direct-message.dm-list.dm-list-container"],
 /* server channel list */
 [class*="GuildNavbar.module__guildNavbarContainer_"],
 /* self status */
-[class*="GuildsLayout.module__userAreaWrapper_"],
+[data-flx="app.guilds-layout.user-area-wrapper"],
 /* channel header */
 [class*="ChannelHeader.module__headerWrapper_"],
 /* channel member list */
@@ -442,7 +456,7 @@ html:not(.auth-page) [class*="App.module__appContainer_"],
 /* channel message container */
 [class*="ChannelChatLayout.module__messagesArea_"],
 /* chat input area */
-[class*='ChannelChatLayout\.module__textareaArea_'],
+[data-flx="channel.channel-chat-layout.textarea-area"],
 /* friendslist */
 [class*='DMFriendsView.module__content_'],
 /* friendslist active now panel */
@@ -458,11 +472,11 @@ html:not(.auth-page) [class*="App.module__appContainer_"],
 /* VC DMs panel */
 [class*="DMChannelView.module__callBanner_"],
 /* VC DMs panel active */
-[class*="DMChannelView.module__compactVoiceCallView_"],
+[data-flx="channel.channel-view.channel-compact-call-surface.compact-call-wrapper"],
 /* server member page */
 [class*="GuildMembersPage.module__pageContainer_"],
-/* mobile bottom nav */
-[class*="MobileBottomNav.module__container_"],
+/* mobile bottom nav
+[class*="MobileBottomNav.module__container_"], */
 /* mobile notifications page header */
 [class*="NotificationsPage.module__header_"],
 /* mobile notifications page content */
@@ -484,19 +498,20 @@ html:not(.auth-page) [class*="App.module__appContainer_"],
 	-webkit-backdrop-filter: blur(var(--ThemePanelBlur)) !important;
 	background: var(--ThemePanelBGColor);
 	transition: var(--transition-slow);
+    transition-property: background, border-color, border-radius;
 }
 
 /* area borders hovered */
 /* loading splashscreen */
 [class*='SplashScreen.module__splashContent_']:hover,
 /* server sidebar */
-[class*="GuildsLayout.module__guildListScroller"]:hover,
+[data-flx="app.guilds-layout.guild-list.guild-list-scroller-wrapper"]:hover,
 /* dm list */
-[class*="DMLayout.module__dmListColumn_"]:hover,
+[data-flx="channel.direct-message.dm-list.dm-list-container"]:hover,
 /* server channel list */
 [class*="GuildNavbar.module__guildNavbarContainer_"]:hover,
 /* self status */
-[class*="GuildsLayout.module__userAreaWrapper_"]:hover,
+[data-flx="app.guilds-layout.user-area-wrapper"]:hover,
 /* channel header */
 [class*="ChannelHeader.module__headerWrapper_"]:hover,
 /* channel member list */
@@ -504,7 +519,7 @@ html:not(.auth-page) [class*="App.module__appContainer_"],
 /* channel message container */
 [class*="ChannelChatLayout.module__messagesArea_"]:hover,
 /* chat input area */
-[class*='ChannelChatLayout\.module__textareaArea_']:hover,
+[data-flx="channel.channel-chat-layout.textarea-area"]:hover,
 /* friendslist */
 [class*='DMFriendsView.module__content_']:hover,
 /* friendslist active now panel */
@@ -520,7 +535,7 @@ html:not(.auth-page) [class*="App.module__appContainer_"],
 /* VC DMs panel */
 [class*="DMChannelView.module__callBanner_"]:hover,
 /* VC DMs panel active */
-[class*="DMChannelView\.module__compactVoiceCallView_"]:hover,
+[data-flx="channel.channel-view.channel-compact-call-surface.compact-call-wrapper"]:hover,
 /* server member page */
 [class*="GuildMembersPage.module__pageContainer_"]:hover,
 /* mobile bottom nav */
@@ -543,6 +558,7 @@ html:not(.auth-page) [class*="App.module__appContainer_"],
 	background: var(--ThemePanelBGColorHovered);
 	border: var(--ThemePanelBorderHovered)!important;
 	transition: var(--transition-fast);
+    transition-property: background, border-color, border-radius;
 }
 
 /* ---------------------------------------------------------------- */
@@ -556,6 +572,10 @@ html:not(.auth-page) [class*="App.module__appContainer_"],
 	background: var(--ThemeDarkenMedium);
 }
 
+[data-flx="app.settings-modal-layout.settings-modal-desktop-sidebar.desktop-sidebar-inner"] {
+  background: var(--background-primary);
+}
+
 /* settings menu panel */
 [class*="Modal.module__root_"] {
 	background-color: var(--ThemeDarkenMedium);
@@ -567,6 +587,13 @@ html:not(.auth-page) [class*="App.module__appContainer_"],
 /* settings menu container */
 [class*="Modal.module__surface_"] {
 	overflow: visible!important;
+}
+
+/* slider checkbox settings */
+[data-flx="ui.form.switch.container"] {
+    background: var(--background-secondary-alt);
+    padding: 0.2rem 0.5rem;
+    border-radius: var(--radius-md);
 }
 
 /* ---------------------------------------------------------------- */
@@ -917,6 +944,12 @@ html:not(.auth-page) [class*="App.module__appContainer_"],
 /* vc 
 /* ---------------------------------------------------------------- */
 
+[data-flx="voice.voice-control-bar.voice-control-bar-inner.container"] {
+  --vc-danger-solid: var(--status-danger); /* #ff3b30 */
+  --vc-danger: var(--status-danger); /* #ff453a */
+  --vc-danger-solid-hover: var(--status-danger); /* #ff453a */
+}
+
 /* dm vc chat area */
 [class*="ChannelIndexPage.module__voiceActiveHeaderWrapper_"], 
 [class*="DMChannelView.module__compactCallWrapper_"], 
@@ -945,38 +978,44 @@ html:not(.auth-page) [class*="App.module__appContainer_"],
 }
 
 /* ---------------------------------------------------------------- */
-/* user typing status
+/* chat input area
 /* ---------------------------------------------------------------- */
 
 /* user typing status user container thingy */
-[class*='ChannelChatLayout.module__typingContent_'] {
-	/* these were from a test, it was kinda irritating to have the messages window shift whenever someone typed.
-	height: fit-content;
-	position: inherit;
-	left: unset;
-	right: unset;
-	bottom: unset;
-	*/
-	bottom: calc(var(--typing-floating-offset) + 6px);
+[data-flx="channel.lexical-channel-textarea-content.flx-channel-textarea-status-rail"] {
+	height: calc(2.125rem + var(--ThemePanelMargin))!important;
 }
 
-/* overwrite the spacing change while replying to someone */
+/* overwrite the spacing change while replying to someone 
 [class*='ChannelChatLayout.module__typingAreaWithTopBar_'] [class*='ChannelChatLayout.module__typingContent_'] {
-	/* bottom: calc(var(--typing-floating-offset) + 12px); */
 	bottom: calc(var(--typing-floating-offset) + 6px);
+}*/
+
+/* user typing bottom gradient */
+[data-flx="channel.lexical-channel-textarea-content.textarea-outer"]::before {
+	background: transparent!important;
 }
 
 /* user typing status user pills */
-[class*='Message.module__typingPill_'] {
+[data-flx="channel.lexical-channel-textarea-content.flx-channel-textarea-typing-slot"],
+[data-flx='channel.lexical-channel-textarea-content.flx-channel-textarea-slowmode-slot'] {
 	backdrop-filter: blur(var(--ThemePanelBlurSmall));
 	-webkit-backdrop-filter: blur(var(--ThemePanelBlurSmall))!important;
 	background-color: var(--ThemePanelBGColor);
 	border: var(--ThemePanelBorder);
+    border-radius: var(--radius-lg)!important;
 	transform: none!important;
 	transition: var(--transition-normal);
 }
+[data-flx="channel.lexical-channel-textarea-content.flx-channel-textarea-typing-slot"] {
+    padding: 0rem 0.3rem;
+}
+[data-flx='channel.lexical-channel-textarea-content.flx-channel-textarea-slowmode-slot'] {
+    padding: 0rem 0.2rem 0rem 0.3rem;
+}
 
-[class*='Message.module__typingPill_']:hover {
+[data-flx="channel.lexical-channel-textarea-content.flx-channel-textarea-typing-slot"]:hover,
+[data-flx='channel.lexical-channel-textarea-content.flx-channel-textarea-slowmode-slot']:hover {
 	border: var(--ThemePanelBorderHovered);
 	transition: var(--transition-fast);
 }
@@ -984,6 +1023,13 @@ html:not(.auth-page) [class*="App.module__appContainer_"],
 /*  typing pill avatar container */
 [class*="AvatarStack.module__container___YWY1Yz"]{
 	padding-bottom: unset;
+}
+
+/* chat input area */
+[data-flx="channel.lexical-channel-textarea-content.textarea-outer"] {
+  margin-inline: unset!important;
+  -webkit-margin-after: unset;
+  margin-bottom: unset;
 }
 
 /* ---------------------------------------------------------------- */
@@ -1047,24 +1093,17 @@ html:not(.auth-page) [class*="App.module__appContainer_"],
 }
 
 
-/* "X new messages since Date" panel */
-[class*='Messages.module__newMessagesBar_'] {
-	padding-top: 0px;
-	top: 0.5rem;
-	border-radius: calc(var(--ThemePanelBorderRounding) - 0.5rem)!important;
-	box-shadow: var(--shadow-lg);
-}
-/* "youre viewing older messages" panel */
-[aria-busy="false"][class*='Messages.module__newMessagesBar_'],
-[aria-busy="true"][class*='Messages.module__newMessagesBar_'] {
+/* "X new messages since Date" panel / youre viewing older messages */
+[data-flx="channel.messages.jump-to-present-bar"] {
 	padding-top: 0px!important;
 	padding-bottom: 0px!important;
 	bottom: 0.5rem!important;
 	border-radius: calc(var(--ThemePanelBorderRounding) - 0.5rem)!important;
-	background: var(--ThemeFlatLighter);
-
+	background: var(--ThemeDarkenMedium);
+    backdrop-filter: blur(5px);
 	box-shadow: var(--shadow-lg);
 }
+
 
 /* blocked/spammer message panel */
 [class*='BlockedMessageGroups.module__container_'] {
@@ -1266,7 +1305,8 @@ textarea.FormSurface\.module__surface___XzQ4ZT.Input\.module__input___ZGQ3MT.Scr
 	
 	[class*="GuildNavbar.module__guildNavbarContainer_"],
 	[class*="ChannelChatLayout.module__messagesArea_"],
-	[class*="ChannelChatLayout.module__container_"],
+	[data-flx="channel.channel-chat-layout.container"],
+    [data-flx="channel.direct-message.dm-list.dm-list-container"],
 	[class*="ChannelIndexPage.module__channelGrid_"],
 	[class*="GuildLayout.module__guildMainContent_"],
 	[class*="ChannelLayout.module__channelLayoutContainer_"],
@@ -1275,7 +1315,7 @@ textarea.FormSurface\.module__surface___XzQ4ZT.Input\.module__input___ZGQ3MT.Scr
 	[class*="OutlineFrame.module__frame_"],
 	[class*="OutlineFrame.module__body_"],
 	[class*="MemberListContainer.module__memberListContainer_"],
-	[class*='ChannelChatLayout.module__textareaArea_'],
+	[data-flx="channel.channel-chat-layout.textarea-area"],
 	[class*="NotificationsPage.module__content_"],
 	[class*="GuildNavbarSkeleton.module__skeletonContainer_"],
 	/* vc dms active panel */
@@ -1288,13 +1328,13 @@ textarea.FormSurface\.module__surface___XzQ4ZT.Input\.module__input___ZGQ3MT.Scr
 	}
 	
 	/* server sidebar */
-	[class*="GuildsLayout.module__guildListScroller"],
+	[data-flx="app.guilds-layout.guild-list.guild-list-scroller-wrapper"],
 	/* dm list */
-	[class*="DMLayout.module__dmListColumn_"],
+	[data-flx="channel.direct-message.dm-list.dm-list-container"],
 	/* server channel list */
 	[class*="GuildNavbar.module__guildNavbarContainer_"],
 	/* self status */
-	[class*="GuildsLayout.module__userAreaWrapper_"],
+	[data-flx="app.guilds-layout.user-area-wrapper"],
 	/* channel header */
 	[class*="ChannelHeader.module__headerWrapper_"],
 	/* channel member list */
@@ -1302,7 +1342,7 @@ textarea.FormSurface\.module__surface___XzQ4ZT.Input\.module__input___ZGQ3MT.Scr
 	/* channel message container */
 	[class*="ChannelChatLayout.module__messagesArea_"],
 	/* chat input area */
-	[class*='ChannelChatLayout\.module__textareaArea_'],
+	[data-flx="channel.channel-chat-layout.textarea-area"],
 	/* friendslist */
 	[class*='DMFriendsView.module__content_'],
 	/* friendslist active now panel */
@@ -1312,7 +1352,7 @@ textarea.FormSurface\.module__surface___XzQ4ZT.Input\.module__input___ZGQ3MT.Scr
 	[class*="ChannelChatLayout.module__messagesArea_"],
 	[class*="ChannelHeader.module__headerWrapper_"],
 	[class*="MemberListContainer.module__memberListContainer_"],
-	[class*='ChannelChatLayout.module__textareaArea_'],
+	[data-flx="channel.channel-chat-layout.textarea-area"],
 	/* vc server panel */
 	[class*="VoiceCallView.module__root_"],
 	/* vc server panel empty */
@@ -1355,7 +1395,7 @@ textarea.FormSurface\.module__surface___XzQ4ZT.Input\.module__input___ZGQ3MT.Scr
 	
 
 	/* chat input area */
-	[class*='ChannelChatLayout.module__textareaArea_']::after {
+	[data-flx="channel.channel-chat-layout.textarea-area"]::after {
 		content: "input";
 	}
 	/* server member page */
@@ -1369,7 +1409,7 @@ textarea.FormSurface\.module__surface___XzQ4ZT.Input\.module__input___ZGQ3MT.Scr
 		content: "channel";
 	}
 	/* dm list */
-	[class*="DMLayout.module__dmListColumn_"]::after {
+	[data-flx="channel.direct-message.dm-list.dm-list-container"]::after {
 		content: "users";
 	}
 	/* server channel list */
@@ -1383,12 +1423,12 @@ textarea.FormSurface\.module__surface___XzQ4ZT.Input\.module__input___ZGQ3MT.Scr
 		content: "search";
 	}
 	/* server sidebar */
-	[class*="GuildsLayout.module__guildListScroller"]::after,
+	[data-flx="app.guilds-layout.guild-list.guild-list-scroller-wrapper"]::after,
 	[class*="MobileBottomNav.module__container_"]::after {
 		content: "nav";
 	}
 	/* self status */
-	[class*="GuildsLayout.module__userAreaWrapper_"]::after {
+	[data-flx="app.guilds-layout.user-area-wrapper"]::after {
 		content: "user";
 	}
 	/* friendslist */
@@ -1447,9 +1487,10 @@ textarea.FormSurface\.module__surface___XzQ4ZT.Input\.module__input___ZGQ3MT.Scr
 		border-radius: 0px!important;
 	}
 
-	[class*="BaseAvatar"] > image {
-		mask: none;
-	}
+    /* profile mask */
+    [data-flx="ui.base-avatar.image-frame"] {
+      mask: unset;
+    }
 }
 
 
@@ -1466,80 +1507,51 @@ textarea.FormSurface\.module__surface___XzQ4ZT.Input\.module__input___ZGQ3MT.Scr
 
 @container body style(--OutlineOnlineStatus: on) {
 	/* hide original status indicator */
-	[class*="BaseAvatar.module__statusContainer_"] {
+	[data-flx="ui.base-avatar.status-container"] {
 		display: none!important;
 	}
+  
+	[data-flx="ui.base-avatar.image-frame"] {
+      mask: unset;
+    }
 	
-	[class*="BaseAvatar"] > image {
-		mask: none;
-		border-radius: var(--radius-full)!important;
-	}
-	
-	[class*="BaseAvatar.module__container_"] {
+	[data-flx="ui.status-aware-avatar.avatar"] {
 		border-radius: var(--radius-full)!important;
 		overflow: hidden;
 	}
 	
 	
-	[class*="BaseAvatar.module__container_"][aria-label*="Offline"],
-	[class*="BaseAvatar.module__container_"][aria-label*="Do Not Disturb"],
-	[class*="BaseAvatar.module__container_"][aria-label*="Idle"],
-	[class*="BaseAvatar.module__container_"][aria-label*="Online"] {
-		border-width: 0.15rem;
+	[data-flx="ui.status-aware-avatar.avatar"][data-flx-status="offline"],
+	[data-flx="ui.status-aware-avatar.avatar"][data-flx-status="dnd"],
+	[data-flx="ui.status-aware-avatar.avatar"][data-flx-status="idle"],
+	[data-flx="ui.status-aware-avatar.avatar"][data-flx-status="online"] {
+        border-width: 0.15rem;
 		border-style: solid;
 	}
 	
-	[class*="BaseAvatar.module__container_"][aria-label*="Offline"] {
+	[data-flx="ui.status-aware-avatar.avatar"][data-flx-status="offline"] {
 		border-color: var(--status-offline);
 	}
-	[class*="BaseAvatar.module__container_"][aria-label*="Do Not Disturb"] {
+	[data-flx="ui.status-aware-avatar.avatar"][data-flx-status="dnd"] {
 		border-color: var(--status-dnd);
 	}
-	[class*="BaseAvatar.module__container_"][aria-label*="Idle"] {
+	[data-flx="ui.status-aware-avatar.avatar"][data-flx-status="idle"] {
 		border-color: var(--status-idle);
 	}
-	[class*="BaseAvatar.module__container_"][aria-label*="Online"] {
+	[data-flx="ui.status-aware-avatar.avatar"][data-flx-status="online"] {
 		border-color: var(--status-online);
 	}
 	
 	/* pfp view outline medium */
-	[class*="UserProfileModal"] [class*="BaseAvatar.module__container_"],
-	[class*="ProfileCardBanner"] [class*="BaseAvatar.module__container_"],
-	[class*="YouPage"] [class*="BaseAvatar.module__container_"]{
+	[class*="UserProfileModal"] [data-flx="ui.status-aware-avatar.avatar"],
+	[class*="ProfileCardBanner"] [data-flx="ui.status-aware-avatar.avatar"],
+	[class*="YouPage"] [data-flx="ui.status-aware-avatar.avatar"]{
 		border-width: 4px;
 	}
 }
 
 
-/* ---------------------------------------------------------------- */
-/* Customization: App Icon */
-/* ---------------------------------------------------------------- */
 
-@property --CustomAppIcon {
-	syntax: 'off | on';
-	inherits: false;
-	initial-value: on;
-}
-
-@container body style(--CustomAppIcon: on) {
-	
-	/* hide original svg path */
-	[class*="GuildsLayout.module__fluxerSymbolIcon_"] > path {
-		display: none;
-	}
-
-	[class*="GuildsLayout.module__fluxerButtonIcon_"] {
-		overflow: hidden;
-	}
-
-	/* replace appicon with custom image */
-	[class*="GuildsLayout.module__fluxerSymbolIcon_"]
-	{
-		background: var(--ThemeCustomIconUrl) no-repeat;
-		background-size: contain;
-		background-position: center;
-	}
-}
 
 
 /* ---------------------------------------------------------------- */
@@ -1592,9 +1604,9 @@ textarea.FormSurface\.module__surface___XzQ4ZT.Input\.module__input___ZGQ3MT.Scr
 		/* display: block !important;   restore proper layout */
 		width: fit-content;          /* shrink to content */
 		margin-top: 4px;
-		padding: 8px 14px;
+		padding: 0.3rem 0.4rem;
 		background: var(--ThemeMessageBubbleColor)!important;
-		border-radius: 12px !important;
+		border-radius: var(--ThemePanelBorderRounding) !important;
 	}
 }
 
@@ -1660,12 +1672,39 @@ textarea.FormSurface\.module__surface___XzQ4ZT.Input\.module__input___ZGQ3MT.Scr
 	initial-value: left;
 }
 
+@container body style(--Horizontal-Serverlist: off) {
+    @container body style(--Serverlist-Alignment: right) {
+          /* make channel list etc wider to match user area */
+          [data-flx="app.guilds-layout.user-area-wrapper"] {
+              width: var(--layout-sidebar-width);
+          }  
+
+          [data-flx="app.guilds-layout.guild-list.guild-list-scroller-wrapper"] {
+              width: var(--layout-guild-list-width);
+              height: 100%;
+          }
+
+          /* reverse layout order */
+          [data-flx="app.guilds-layout.guilds-layout"] {
+                display: flex;
+                flex-direction: row-reverse;
+          }
+          /* swap active indicator side*/
+          [data-flx="app.sidebar-nav.guild-list-item-presentation.guild-indicator"] {
+              left: unset;
+              right: var(--guild-list-indicator-inset);
+          }
+          [data-flx="app.sidebar-nav.guild-list-item-presentation.guild-indicator-bar"] {
+              border-radius:  var(--radius-full) 0 0 var(--radius-full);
+          }
+    }
+}
 
 @container body style(--Horizontal-Serverlist: on) {
 	
 	/* doesnt have any effect placed here. need to find a workaround. */
 	:root {
-		--layout-guild-list-width: 4.4rem; /* more compact */
+		
 		--layout-sidebar-width: calc(16.875rem + var(--layout-guild-list-width))!important; /* make sidebar wider to compensate for extra space */
 	}
 	
@@ -1680,13 +1719,13 @@ textarea.FormSurface\.module__surface___XzQ4ZT.Input\.module__input___ZGQ3MT.Scr
 		}
 
 		/* make channel list etc wider to match user area */
-		[class*="GuildsLayout.module__userAreaWrapper_"] {
+		[data-flx="app.guilds-layout.user-area-wrapper"] {
 			width: var(--layout-sidebar-width);
 		}
 
 		/* scroller wrapper */
 		[class*="GuildsLayout.module__guildListScrollerWrapper_"] {
-			height: var(--layout-guild-list-width);
+			height: calc(var(--layout-guild-list-width) + 0.5rem);
 			width: 100%;
 		}
 		/* scroller wrap | changed to fix hover region while allowing panel labels */
@@ -1723,14 +1762,17 @@ textarea.FormSurface\.module__surface___XzQ4ZT.Input\.module__input___ZGQ3MT.Scr
 		/* unrotate server button & misc buttons */
 		[class*="GuildsLayout.module__guildListItem_"],
 		[class*="GuildFolderItem.module__folderHeader_"] {
-			width: 3.7rem; 
 			transform: rotateZ(-180deg);
 		}
 		/* unrotate server image & extra buttons */
 		[class*="GuildListDMItem.module__relative_"],
 		[class*="GuildsLayout.module__relative_"],
 		[class*="GuildFolderItem.module__relative_"],
-		[class*="GuildsLayout.module__addGuildButtonIcon_"]
+		[class*="GuildsLayout.module__addGuildButtonIcon_"],
+        /* unrotate discovery, create server & help */
+        [data-flx="app.sidebar-nav.discovery-button.div"],
+        [data-flx="app.sidebar-nav.add-guild-button.div"],
+        [data-flx="app.sidebar-nav.help-button.button.help"]
 		{
 			transform: rotateZ(-90deg);
 		} 
@@ -1751,10 +1793,12 @@ textarea.FormSurface\.module__surface___XzQ4ZT.Input\.module__input___ZGQ3MT.Scr
 		@container body style(--Serverlist-Alignment: right) {
 
 			/* reverse server list */
-			[class*="GuildsLayout.module__guildListContent_"],
+			[data-flx="app.guilds-layout.guild-list.guild-list-content"],
 			[class*="GuildsLayout.module__guildListTopSection_"], 
 			[class*="GuildsLayout.module__guildListGuildsSection_"] {
-				flex-direction: column-reverse;
+				display: flex;
+                padding: unset;
+                flex-direction: column-reverse!important;
 			}
 
 			[class*="GuildsLayout.module__guildListScrollContainer_"] [class*="Scroller.module__scrollerChildren_"] {
@@ -1841,7 +1885,7 @@ textarea.FormSurface\.module__surface___XzQ4ZT.Input\.module__input___ZGQ3MT.Scr
 	/* server channel list */
 	[class*="GuildNavbar.module__guildNavbarContainer_"],
 	/* dm list container */
-	[class*="DMLayout.module__dmListColumn_"]
+	[data-flx="channel.direct-message.dm-list.dm-list-container"]
 	{
 		width: -webkit-fill-available;
 		/* idk why it doesnt need to multiply the themepanelborderthickness on mobile*/
