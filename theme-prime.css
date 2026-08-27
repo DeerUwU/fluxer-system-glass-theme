@@ -2,7 +2,7 @@
  * @name PRIME Theme
  * @description Theme based on PRIMELOCK / Neon Prime
  * @author deer#1234
- * @version 2
+ * @version 2.0.1
  * @tags canary, modern, neon, customizable
  */
 
@@ -1071,6 +1071,7 @@ div:has(>[class*="ChannelItem.module__channelItemIcon_"]) {
     border-radius: var(--radius-full);
     transform: none;
     transition: var(--transition-normal);
+    border: 1px solid var(--background-modifier-hover);
 }
 [data-flx="channel.lexical-channel-textarea-content.flx-channel-textarea-typing-slot"] {
     padding: 0rem 0.3rem;
@@ -1177,25 +1178,37 @@ div:has(>[class*="ChannelItem.module__channelItemIcon_"]) {
 
 
 /* "X new messages since Date" panel */
-[class*='Messages.module__newMessagesBar_'] {
+
+
+[data-flx="channel.messages.jump-to-present-bar"] {
     padding-top: 0px;
-    top: 0.5rem;
-    left: var(--message-gutter);
-    right: var(--message-gutter);
-    border-radius: var(--radius-md)!important;
-    box-shadow: var(--shadow-lg);
-}
-/* "youre viewing older messages" panel */
-[aria-busy="false"][class*='Messages.module__newMessagesBar_'],
-[aria-busy="true"][class*='Messages.module__newMessagesBar_'] {
-    padding-top: 0px!important;
     padding-bottom: 0px!important;
     bottom: 0.5rem!important;
-    border-radius: var(--radius-md)!important;
-    background: var(--ThemeFlatLighter);
-
+    border-radius: var(--radius-lg);
+    background: var(--themecolor-black-75);
     box-shadow: var(--shadow-lg);
+    transition: var(--transition-slow);
+    transition-property: border-color;
 }
+[data-flx="channel.messages.jump-to-present-bar"]:hover {
+    border-color: var(--themecolor-tech); 
+    transition-property: border-color;
+    transition: var(--transition-fast);
+}
+[data-flx="channel.messages.jump-to-present-bar"] > button {
+    border-radius: var(--radius-md)!important;
+    border: none;
+    background-color: var(--themecolor-tech-trans-med)!important;
+    transition: var(--transition-slow);
+}
+[data-flx="channel.messages.jump-to-present-bar"] > button:hover {
+  background-color: var(--themecolor-tech)!important;
+  transition: var(--transition-fast);
+}
+/*"youre viewing older messages" panel 
+[aria-busy="false"][class*='Messages.module__newMessagesBar_'],
+[aria-busy="true"][class*='Messages.module__newMessagesBar_']
+*/
 
 /* blocked/spammer message panel */
 [class*='BlockedMessageGroups.module__container_'] {
@@ -1592,7 +1605,7 @@ pre {
 @container body style(--HideBlockedMessages: on) {
     
     /* blocked/spammer message panel */
-    [class*='BlockedMessageGroups.module__container_'] {
+    [data-flx="channel.blocked-message-groups.toggle.click.button"] {
         display: none;
     }
 }
